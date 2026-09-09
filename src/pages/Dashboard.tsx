@@ -1,0 +1,72 @@
+import { useState } from 'react';
+import { Area, Column, Funnel } from '@ant-design/charts';
+import { Button, Card, Checkbox, Col, DatePicker, List, Progress, Row, Select, Space, Tag, Tooltip } from 'antd';
+import {
+  ArrowRightOutlined, CalendarOutlined, PlusOutlined, RocketOutlined,
+  SyncOutlined, WarningOutlined,
+} from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
+import { PageHeader, StatCard, StatusTag } from '../components/Common';
+import { funnelData, projects, trendData } from '../services/mock';
+import { useApp } from '../context/AppContext';
+
+export function Dashboard() {
+  const navigate = useNavigate();
+  const { dataScope } = useApp();
+  const [project, setProject] = useState('all');
+  const [trendTypes, setTrendTypes] = useState<string[]>(['邀约量','完成量']);
+  const trendSeries = trendData.flatMap(x=>[
+    {date:x.date,type:'邀约量',value:x.邀约量},
+    {date:x.date,type:'完成量',value:x.完成量},
+  ]).filter(item=>trendTypes.includes(item.type));
+  const openTrendDetail = (event?: { data?: { data?: { date?:string; type?:string } } }) => {
+    const datum = event?.data?.data;
+    const params = new URLSearchParams({
+      source:'首页工作台',
+      metric:datum?.type || trendTypes.join('、') || '面试趋势',
+      date:datum?.date || '近14天',
+      project,
+    });
+    navigate(`/analytics/detail?${params.toString()}`);
+  };
+  return <div>
+    <div className="welcome-bar">
+      <div><span>2026 年 9 月 3 日 · 星期四</span><h1>下午好，周谨言</h1><p>当前数据范围：{dataScope}</p></div>
+      <Space><Button icon={<RocketOutlined />} type="primary" onClick={()=>navigate('/interviews/invite')}>发起邀约</Button><Button icon={<PlusOutlined />} onClick={()=>navigate('/jobs')}>新建岗位</Button><Button icon={<ArrowRightOutlined />} onClick={()=>navigate('/analytics/overview')}>查看数据看板</Button></Space>
+    </div>
+    <div className="dashboard-filter">
+      <Space><DatePicker.RangePicker /><Select value={project} onChange={setProject} style={{width:240}} options={[{value:'all',label:'全部项目'},...projects.slice(0,3).map(x=>({value:x.key,label:x.name}))]} /><Select placeholder="全部岗位" style={{width:180}} options={[{value:'all',label:'全部岗位'}]} /></Space>
+      <span><SyncOutlined /> 数据更新于 16:50</span>
+    </div>
+    <Row gutter={12} className="stats-row five">
+      <Col flex="1"><StatCard label="累计面试人数" value="12,680" trend="+18.6%" onClick={()=>navigate('/records')} /></Col>
+      <Col flex="1"><StatCard label="进行中项目" value="18" trend="+2" tone="cyan" onClick={()=>navigate('/projects?status=进行中')} /></Col>
+      <Col flex="1"><StatCard label="招聘中岗位" value="46" trend="+6" tone="green" onClick={()=>navigate('/jobs?status=招聘中')} /></Col>
+      <Col flex="1"><StatCard label="AI 面试完成量" value="8,946" trend="+21.3%" tone="violet" onClick={()=>navigate('/records?type=AI')} /></Col>
+      <Col flex="1"><StatCard label="本月节省人工时长" value="1,286h" trend="+16.2%" tone="orange" onClick={()=>navigate('/analytics/interviews')} /></Col>
+    </Row>
+    <Card className="overview-strip" title="今日运行概览">
+      <div className="overview-items">
+        {[['今日待面试','86','blue'],['面试中','12','cyan'],['待审核','28','orange'],['异常数量','7','red'],['24 小时内过期','16','gold']].map(x=><div key={x[0]} onClick={()=>navigate('/interviews/process')}><span className={`dot ${x[2]}`} /><b>{x[1]}</b><small>{x[0]}</small></div>)}
+      </div>
+    </Card>
+    <Row gutter={16}>
+      <Col span={15}><Card title="招聘转化漏斗" extra={<Tooltip title="点击任一阶段查看明细"><Button type="link">查看明细</Button></Tooltip>} className="chart-card">
+        <Funnel data={funnelData} xField="stage" yField="value" shape="funnel" colorField="stage" style={{fillOpacity:0.88}} onReady={chart=>chart.on('element:click',()=>navigate('/analytics/detail?source=dashboard&metric=funnel'))} />
+      </Card></Col>
+      <Col span={9}><Card title="项目进度排行" extra={<Button type="link" onClick={()=>navigate('/projects')}>全部项目</Button>} className="chart-card">
+        <List dataSource={projects.slice(0,4)} renderItem={(item,index)=><List.Item className="rank-item" onClick={()=>navigate(`/projects/${item.key}`)}>
+          <span className={`rank ${index<3?'top':''}`}>{index+1}</span><div className="rank-main"><b>{item.name}</b><div><Progress percent={item.progress} size="small" showInfo={false} /><span>{item.passed}/{item.target}</span></div></div><Tag color={item.risk==='正常'?'green':'orange'}>{item.risk}</Tag>
+        </List.Item>} />
+      </Card></Col>
+    </Row>
+    <Row gutter={16}>
+      <Col span={16}><Card title="近 14 天面试趋势" extra={<Space><Checkbox.Group className="trend-selector" value={trendTypes} onChange={values=>setTrendTypes(values as string[])} options={['邀约量','完成量']} /><Button type="link" onClick={()=>openTrendDetail()}>查看明细</Button></Space>} className="chart-card clickable-chart">
+        <Area data={trendSeries} xField="date" yField="value" colorField="type" shapeField="smooth" point={{shapeField:'circle',sizeField:4}} style={{fillOpacity:0.12,cursor:'pointer'}} axis={{y:{title:'人数'}}} onReady={chart=>chart.on('element:click',openTrendDetail)} />
+      </Card></Col>
+      <Col span={8}><Card title="异常预警" extra={<Button type="link" onClick={()=>navigate('/interviews/exceptions')}>全部异常</Button>} className="chart-card">
+        <List dataSource={[['通知发送失败',3,'短信通道返回频控'],['面试网络中断',2,'候选人连接不稳定'],['AI 评分异常',1,'评分项结果缺失'],['结果回传失败',1,'已自动重试 2 次']]} renderItem={item=><List.Item className="warning-item" onClick={()=>navigate('/interviews/exceptions')}><WarningOutlined /><div><b>{item[0]} <Tag color="red">{item[1]}</Tag></b><span>{item[2]}</span></div><ArrowRightOutlined /></List.Item>} />
+      </Card></Col>
+    </Row>
+  </div>;
+}
