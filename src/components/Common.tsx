@@ -49,12 +49,12 @@ export function EmptyState({ type = 'empty', onRetry }: { type?:string; onRetry?
   return <Empty description={type === 'search' ? '未找到符合条件的数据' : '暂无数据'}><Button type="primary">创建第一条数据</Button></Empty>;
 }
 
-export function DetailDrawer({ open, onClose, title, record, content, width = 620 }: {
+export function DetailDrawer({ open, onClose, title, record, content, width = 620, extra }: {
   open:boolean; onClose:()=>void; title:string; record?:Record<string, unknown>;
-  content?:ReactNode; width?:number;
+  content?:ReactNode; width?:number; extra?:ReactNode;
 }) {
   return (
-    <Drawer open={open} onClose={onClose} width={width} title={title} extra={<Button type="primary">查看完整详情</Button>}>
+    <Drawer open={open} onClose={onClose} width={width} title={title} extra={extra || <Button type="primary">查看完整详情</Button>}>
       {content || <>
         <Alert type="info" showIcon message="信息来自 Mock Service，可替换为真实接口" />
         <Descriptions column={1} bordered size="small" style={{ marginTop:16 }}>

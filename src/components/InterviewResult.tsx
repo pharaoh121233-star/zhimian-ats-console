@@ -7,6 +7,8 @@ import {
 } from '@ant-design/icons';
 import type { Interview } from '../services/mock';
 
+export const AGENT_RECORD_URL = 'https://zhimianv1.coze.site/admin/monitor/11f6600b-7a91-4438-96c6-c20aaa8ee904';
+
 const dimensions = [
   { name:'专业技能', score:84 },
   { name:'工作经验', score:80 },
@@ -102,7 +104,11 @@ function ProfileTags() {
 }
 
 function QuestionList() {
-  return <Card className="result-card" title="问答记录（10 题）" extra={<Space><Tag color="green">已回答 10</Tag><Tag>未回答 0</Tag><Button type="primary" ghost size="small" icon={<ExportOutlined />} href="https://zhimianv1.coze.site/admin/monitor/11f6600b-7a91-4438-96c6-c20aaa8ee904" target="_self">查看具体记录</Button></Space>}>
+  return <Card className="result-card" title="问答记录（10 题）" extra={<Space><Tag color="green">已回答 10</Tag><Tag>未回答 0</Tag></Space>}>
+    <div className="qa-source-link">
+      <div><b>Agent 原始面试记录</b><span>查看完整对话、录音及 Agent 执行过程</span></div>
+      <Button type="primary" icon={<ExportOutlined />} href={AGENT_RECORD_URL} target="_self">查看具体记录</Button>
+    </div>
     <Collapse ghost items={questions.map((item,index)=>({
       key:String(index),
       label:<div className="qa-title"><b>Q{index+1}</b><Tag color={item.type==='AI追问'?'blue':'purple'}>{item.type}</Tag><Tag>{item.level}</Tag><span>{item.question}</span><Tag color="green" icon={<CheckCircleFilled />}>已回答</Tag></div>,

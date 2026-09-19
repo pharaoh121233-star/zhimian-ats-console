@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button, Progress, Tag } from 'antd';
 import { BusinessList, progressCol, statusCol, textCol } from '../components/BusinessList';
-import { InterviewResult } from '../components/InterviewResult';
+import { AGENT_RECORD_URL, InterviewResult } from '../components/InterviewResult';
 import { pageMeta } from '../config/navigation';
 import { interviews, jobs, projects } from '../services/mock';
 import { mockFeishuService } from '../services/feishu';
@@ -61,5 +61,5 @@ export function GenericPage() {
   const stats = isRecord
     ? [{label:'全部记录',value:source.length},{label:'已完成',value:interviews.filter(item=>item.status==='已完成').length},{label:'建议通过',value:interviews.filter(item=>item.result==='建议通过').length,tone:'green'},{label:'待复核',value:interviews.filter(item=>item.result==='待复核').length,tone:'orange'},{label:'已生成人员标签',value:1,tone:'blue'}]
     : [{label:'全部',value:128},{label:'启用 / 进行中',value:86},{label:'待处理',value:18,tone:'orange'},{label:'异常',value:3,tone:'red'},{label:'本月新增',value:24,tone:'green'}];
-  return <BusinessList title={meta.title} description={meta.description} stats={stats} data={source as unknown as (Record<string,unknown>&{key:string})[]} columns={columns} primaryAction={isTalent?'录入候选人':`新建${meta.title.replace('管理','')}`} allowBoard={isTalent||pathname==='/approvals'} headerExtra={pathname==='/versions'?<Button onClick={()=>navigate('/jobs')}>查看当前配置</Button>:undefined} detailContent={isRecord?record=><InterviewResult record={record}/>:undefined} detailWidth={isRecord?1180:undefined} />;
+  return <BusinessList title={meta.title} description={meta.description} stats={stats} data={source as unknown as (Record<string,unknown>&{key:string})[]} columns={columns} primaryAction={isTalent?'录入候选人':`新建${meta.title.replace('管理','')}`} allowBoard={isTalent||pathname==='/approvals'} headerExtra={pathname==='/versions'?<Button onClick={()=>navigate('/jobs')}>查看当前配置</Button>:undefined} detailContent={isRecord?record=><InterviewResult record={record}/>:undefined} detailWidth={isRecord?1180:undefined} detailExtra={isRecord?record=>record.candidate==='张兰兰'?<Button type="primary" href={AGENT_RECORD_URL} target="_self">查看 Agent 原始记录</Button>:undefined:undefined} />;
 }
