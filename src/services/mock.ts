@@ -8,55 +8,72 @@ export type Interview = {
   key: string; code: string; candidate: string; project: string; job: string;
   round: string; owner: string; linkStatus: string; status: string; online: string;
   remaining: string; score: number; risk?: string; updated: string;
+  email?: string; interviewTime?: string; result?: string;
 };
 
 export const projects: Project[] = [
-  { key:'1', code:'ZM-PJ-2026-001', name:'西北区域客户服务招聘项目', client:'西北客户运营中心', manager:'周谨言', jobs:4, target:42, passed:29, progress:69, period:'08/01 - 10/31', status:'进行中', risk:'正常', updated:'09-03 16:42' },
-  { key:'2', code:'ZM-PJ-2026-002', name:'2026 秋季技术支持专项', client:'云产品事业部', manager:'沈知行', jobs:6, target:65, passed:31, progress:48, period:'07/15 - 11/15', status:'进行中', risk:'进度偏慢', updated:'09-03 15:18' },
-  { key:'3', code:'ZM-PJ-2026-003', name:'华东交付人才储备项目', client:'华东交付中心', manager:'林嘉树', jobs:3, target:30, passed:25, progress:83, period:'06/20 - 09/20', status:'进行中', risk:'临近到期', updated:'09-03 12:06' },
-  { key:'4', code:'ZM-PJ-2026-004', name:'重点客户解决方案扩编', client:'行业解决方案部', manager:'顾清禾', jobs:5, target:38, passed:18, progress:47, period:'08/10 - 12/15', status:'审批中', risk:'待审批', updated:'09-02 18:30' },
-  { key:'5', code:'ZM-PJ-2026-005', name:'智能服务质检专项', client:'服务体验部', manager:'周谨言', jobs:2, target:18, passed:16, progress:89, period:'05/01 - 09/10', status:'暂停', risk:'资源不足', updated:'09-02 14:28' },
-  { key:'6', code:'ZM-PJ-2026-006', name:'渠道售后能力建设项目', client:'渠道运营中心', manager:'沈知行', jobs:4, target:35, passed:35, progress:100, period:'03/01 - 08/31', status:'已结束', risk:'正常', updated:'09-01 17:09' },
-  { key:'7', code:'ZM-PJ-2026-007', name:'海外中文客服储备计划', client:'国际业务部', manager:'韩若川', jobs:3, target:24, passed:5, progress:21, period:'09/01 - 12/31', status:'草稿', risk:'待发布', updated:'09-01 10:21' },
-  { key:'8', code:'ZM-PJ-2026-008', name:'企业服务交付升级计划', client:'企业服务事业群', manager:'林嘉树', jobs:5, target:50, passed:44, progress:88, period:'01/15 - 07/31', status:'已归档', risk:'正常', updated:'08-28 09:45' },
+  { key:'img-p1', code:'ZM-PJ-2026-001', name:'kuma', client:'产品与客户服务', manager:'项目管理员', jobs:1, target:5, passed:0, progress:20, period:'08/01 - 12/31', status:'进行中', risk:'正常', updated:'08-25 11:36' },
+  { key:'img-p2', code:'ZM-PJ-2026-002', name:'西安-行政岗', client:'西安职场', manager:'行政招聘组', jobs:1, target:8, passed:0, progress:13, period:'08/01 - 10/31', status:'进行中', risk:'正常', updated:'08-25 11:36' },
+  { key:'img-p3', code:'ZM-PJ-2026-003', name:'未归属项目', client:'通用招聘需求', manager:'系统管理员', jobs:7, target:40, passed:6, progress:15, period:'08/01 - 12/31', status:'进行中', risk:'待完善归属', updated:'08-25 11:02' },
 ];
 
 export const jobs = [
-  { key:'1', code:'ZM-JD-2026-018', name:'云产品技术支持工程师', project:projects[1].name, owner:'顾清禾、陈砚', recruiter:'许昭', hc:18, passed:9, gap:9, city:'北京', priority:'紧急', status:'招聘中', version:'V3.2', updated:'09-03 16:10' },
-  { key:'2', code:'ZM-JD-2026-019', name:'客户服务组长', project:projects[0].name, owner:'周谨言', recruiter:'唐宁、苏晚', hc:8, passed:6, gap:2, city:'西安', priority:'高', status:'招聘中', version:'V2.1', updated:'09-03 15:44' },
-  { key:'3', code:'ZM-JD-2026-020', name:'售后服务专员', project:projects[0].name, owner:'周谨言、梁序', recruiter:'苏晚', hc:24, passed:17, gap:7, city:'兰州', priority:'高', status:'招聘中', version:'V1.8', updated:'09-03 14:20' },
-  { key:'4', code:'ZM-JD-2026-021', name:'解决方案支持顾问', project:projects[3].name, owner:'顾清禾', recruiter:'许昭', hc:10, passed:3, gap:7, city:'上海', priority:'普通', status:'审批中', version:'V1.0', updated:'09-03 11:02' },
-  { key:'5', code:'ZM-JD-2026-022', name:'交付项目协调专员', project:projects[2].name, owner:'林嘉树', recruiter:'温言', hc:12, passed:10, gap:2, city:'杭州', priority:'普通', status:'招聘中', version:'V2.0', updated:'09-02 17:31' },
-  { key:'6', code:'ZM-JD-2026-023', name:'客户成功运营经理', project:projects[2].name, owner:'林嘉树、陈砚', recruiter:'温言', hc:6, passed:5, gap:1, city:'南京', priority:'高', status:'暂停招聘', version:'V2.3', updated:'09-02 13:11' },
-  { key:'7', code:'ZM-JD-2026-024', name:'服务质量分析师', project:projects[4].name, owner:'梁序', recruiter:'唐宁', hc:8, passed:7, gap:1, city:'成都', priority:'普通', status:'已关闭', version:'V1.6', updated:'09-01 16:08' },
-  { key:'8', code:'ZM-JD-2026-025', name:'海外中文服务顾问', project:projects[6].name, owner:'韩若川', recruiter:'叶舟', hc:14, passed:2, gap:12, city:'深圳', priority:'普通', status:'草稿', version:'V0.3', updated:'09-01 09:22' },
+  { key:'img-j1', code:'ZM-JD-2026-001', name:'PM', project:projects[0].name, owner:'项目管理员', recruiter:'招聘专员', hc:5, passed:0, gap:5, city:'全国', priority:'普通', status:'招聘中', version:'V1.0', updated:'08-25 11:40' },
+  { key:'img-j2', code:'ZM-JD-2026-002', name:'行政专员', project:projects[1].name, owner:'行政招聘组', recruiter:'招聘专员', hc:8, passed:1, gap:7, city:'西安', priority:'高', status:'招聘中', version:'V1.0', updated:'08-25 11:36' },
+  { key:'img-j3', code:'ZM-JD-2026-003', name:'zj大模型标注', project:projects[2].name, owner:'标注业务负责人', recruiter:'招聘专员', hc:18, passed:3, gap:15, city:'全国', priority:'高', status:'招聘中', version:'V1.0', updated:'08-25 11:02' },
+  { key:'img-j4', code:'ZM-JD-2026-004', name:'腾讯大模型标注', project:projects[2].name, owner:'标注业务负责人', recruiter:'招聘专员', hc:12, passed:3, gap:9, city:'全国', priority:'高', status:'招聘中', version:'V1.0', updated:'08-25 11:02' },
+  { key:'img-j5', code:'ZM-JD-2026-005', name:'事业部总经理', project:projects[2].name, owner:'事业部负责人', recruiter:'招聘专员', hc:1, passed:0, gap:1, city:'全国', priority:'普通', status:'招聘中', version:'V1.0', updated:'08-24 18:00' },
+  { key:'img-j6', code:'ZM-JD-2026-006', name:'桌面运维工程师', project:projects[2].name, owner:'IT 服务负责人', recruiter:'招聘专员', hc:3, passed:0, gap:3, city:'全国', priority:'普通', status:'招聘中', version:'V1.0', updated:'08-14 18:41' },
+  { key:'img-j7', code:'ZM-JD-2026-007', name:'大模型标注', project:projects[2].name, owner:'标注业务负责人', recruiter:'招聘专员', hc:10, passed:0, gap:10, city:'全国', priority:'普通', status:'招聘中', version:'V1.0', updated:'08-14 18:00' },
+  { key:'img-j8', code:'ZM-JD-2026-008', name:'短视频审核', project:projects[2].name, owner:'内容安全负责人', recruiter:'招聘专员', hc:6, passed:0, gap:6, city:'全国', priority:'普通', status:'招聘中', version:'V1.0', updated:'08-13 18:37' },
+  { key:'img-j9', code:'ZM-JD-2026-009', name:'新媒体运营', project:projects[2].name, owner:'内容运营负责人', recruiter:'招聘专员', hc:8, passed:0, gap:8, city:'全国', priority:'普通', status:'招聘中', version:'V1.0', updated:'08-14 15:41' },
 ];
 
 export const interviews: Interview[] = [
-  { key:'1', code:'ZM-IV-20260903-0086', candidate:'江予安', project:projects[1].name, job:jobs[0].name, round:'首轮 AI 面试', owner:'许昭', linkStatus:'进行中', status:'面试中', online:'在线', remaining:'08:42', score:72, risk:'网络波动', updated:'16:48' },
-  { key:'2', code:'ZM-IV-20260903-0085', candidate:'孟书瑶', project:projects[0].name, job:jobs[1].name, round:'首轮 AI 面试', owner:'唐宁', linkStatus:'已访问', status:'待面试', online:'离线', remaining:'48:00', score:0, updated:'16:36' },
-  { key:'3', code:'ZM-IV-20260903-0084', candidate:'程砚秋', project:projects[2].name, job:jobs[4].name, round:'二轮人工复试', owner:'温言', linkStatus:'已完成', status:'待审核', online:'离线', remaining:'--', score:88, updated:'16:20' },
-  { key:'4', code:'ZM-IV-20260903-0083', candidate:'陆闻舟', project:projects[1].name, job:jobs[0].name, round:'首轮 AI 面试', owner:'许昭', linkStatus:'已发送', status:'待面试', online:'离线', remaining:'48:00', score:0, risk:'24 小时内过期', updated:'15:58' },
-  { key:'5', code:'ZM-IV-20260903-0082', candidate:'宋知夏', project:projects[0].name, job:jobs[2].name, round:'首轮 AI 面试', owner:'苏晚', linkStatus:'已完成', status:'待评分', online:'离线', remaining:'--', score:45, risk:'回传延迟', updated:'15:41' },
-  { key:'6', code:'ZM-IV-20260903-0081', candidate:'林望舒', project:projects[3].name, job:jobs[3].name, round:'客户面', owner:'许昭', linkStatus:'已完成', status:'下一轮', online:'离线', remaining:'--', score:91, updated:'15:08' },
-  { key:'7', code:'ZM-IV-20260903-0080', candidate:'谢承宇', project:projects[2].name, job:jobs[5].name, round:'首轮 AI 面试', owner:'温言', linkStatus:'发送失败', status:'异常', online:'离线', remaining:'--', score:0, risk:'短信通道异常', updated:'14:54' },
-  { key:'8', code:'ZM-IV-20260903-0079', candidate:'许清欢', project:projects[0].name, job:jobs[2].name, round:'首轮 AI 面试', owner:'苏晚', linkStatus:'已过期', status:'异常', online:'离线', remaining:'--', score:0, risk:'链接已过期', updated:'14:22' },
-  { key:'9', code:'ZM-IV-20260903-0078', candidate:'周景澄', project:projects[1].name, job:jobs[0].name, round:'首轮 AI 面试', owner:'许昭', linkStatus:'已完成', status:'待审核', online:'离线', remaining:'--', score:83, updated:'13:47' },
-  { key:'10', code:'ZM-IV-20260903-0077', candidate:'苏映雪', project:projects[2].name, job:jobs[4].name, round:'终试', owner:'温言', linkStatus:'已完成', status:'通过', online:'离线', remaining:'--', score:93, updated:'12:50' },
+  { key:'img-i01', code:'ZM-IV-20260825-0020', candidate:'左君怡', project:projects[1].name, job:jobs[1].name, round:'首轮 AI 面试', owner:'招聘专员', linkStatus:'邮件已发送', status:'已完成', online:'离线', remaining:'--', score:68, email:'zuojunyi@36w.cn', interviewTime:'2026/8/25 11:36:25', result:'待复核', updated:'08-25 11:36' },
+  { key:'img-i02', code:'ZM-IV-20260825-0019', candidate:'张兰兰', project:projects[2].name, job:jobs[3].name, round:'首轮 AI 面试', owner:'招聘专员', linkStatus:'邮件已发送', status:'已完成', online:'离线', remaining:'--', score:82, email:'jixueying@36w.cn', interviewTime:'2026/8/25 11:02:10', result:'建议通过', updated:'08-25 11:02' },
+  { key:'img-i03', code:'ZM-IV-20260824-0018', candidate:'张梦迪', project:projects[2].name, job:jobs[2].name, round:'首轮 AI 面试', owner:'招聘专员', linkStatus:'邮件已发送', status:'已完成', online:'离线', remaining:'--', score:65, email:'2287939310@qq.com', interviewTime:'2026/8/24 17:27:55', result:'待复核', updated:'08-24 17:27' },
+  { key:'img-i04', code:'ZM-IV-20260824-0017', candidate:'刘梓瑄', project:projects[2].name, job:jobs[2].name, round:'首轮 AI 面试', owner:'招聘专员', linkStatus:'邮件已发送', status:'已完成', online:'离线', remaining:'--', score:78, email:'1512114078@qq.com', interviewTime:'2026/8/24 17:27:33', result:'建议通过', updated:'08-24 17:27' },
+  { key:'img-i05', code:'ZM-IV-20260824-0016', candidate:'易湘曦', project:projects[2].name, job:jobs[2].name, round:'首轮 AI 面试', owner:'招聘专员', linkStatus:'邮件已发送', status:'已完成', online:'离线', remaining:'--', score:15, email:'1305997846@qq.com', interviewTime:'2026/8/24 17:27:08', result:'建议淘汰', updated:'08-24 17:27' },
+  { key:'img-i06', code:'ZM-IV-20260824-0015', candidate:'陈家华', project:projects[2].name, job:jobs[2].name, round:'首轮 AI 面试', owner:'招聘专员', linkStatus:'邮件已发送', status:'已完成', online:'离线', remaining:'--', score:55, email:'cjh19910925@qq.com', interviewTime:'2026/8/24 17:26:46', result:'待复核', updated:'08-24 17:26' },
+  { key:'img-i07', code:'ZM-IV-20260824-0014', candidate:'刘华媛', project:projects[2].name, job:jobs[2].name, round:'首轮 AI 面试', owner:'招聘专员', linkStatus:'邮件已发送', status:'已完成', online:'离线', remaining:'--', score:72, email:'865009422@qq.com', interviewTime:'2026/8/24 17:26:21', result:'建议通过', updated:'08-24 17:26' },
+  { key:'img-i08', code:'ZM-IV-20260824-0013', candidate:'张镁月', project:projects[2].name, job:jobs[2].name, round:'首轮 AI 面试', owner:'招聘专员', linkStatus:'邮件已发送', status:'已完成', online:'离线', remaining:'--', score:25, email:'2195965720@qq.com', interviewTime:'2026/8/24 17:25:58', result:'建议淘汰', updated:'08-24 17:25' },
+  { key:'img-i09', code:'ZM-IV-20260824-0012', candidate:'张蕊', project:projects[2].name, job:jobs[2].name, round:'首轮 AI 面试', owner:'招聘专员', linkStatus:'邮件已发送', status:'已完成', online:'离线', remaining:'--', score:55, email:'525312584@qq.com', interviewTime:'2026/8/24 17:25:20', result:'待复核', updated:'08-24 17:25' },
+  { key:'img-i10', code:'ZM-IV-20260824-0011', candidate:'王佳洁', project:projects[2].name, job:jobs[2].name, round:'首轮 AI 面试', owner:'招聘专员', linkStatus:'邮件已发送', status:'已完成', online:'离线', remaining:'--', score:0, email:'598213135@qq.com', interviewTime:'2026/8/24 17:24:40', result:'评估匹配度', updated:'08-24 17:24' },
+  { key:'img-i11', code:'ZM-IV-20260824-0010', candidate:'李宏阳', project:projects[2].name, job:jobs[2].name, round:'首轮 AI 面试', owner:'招聘专员', linkStatus:'邮件已发送', status:'已完成', online:'离线', remaining:'--', score:77, email:'412408552@qq.com', interviewTime:'2026/8/24 17:23:29', result:'建议通过', updated:'08-24 17:23' },
+  { key:'img-i12', code:'ZM-IV-20260824-0009', candidate:'张玲钰', project:projects[2].name, job:jobs[3].name, round:'首轮 AI 面试', owner:'招聘专员', linkStatus:'邮件已发送', status:'已完成', online:'离线', remaining:'--', score:72, email:'1304279511@qq.com', interviewTime:'2026/8/24 16:27:03', result:'建议通过', updated:'08-24 16:27' },
+  { key:'img-i13', code:'ZM-IV-20260824-0008', candidate:'姬胜奥', project:projects[2].name, job:jobs[3].name, round:'首轮 AI 面试', owner:'招聘专员', linkStatus:'邮件已发送', status:'已完成', online:'离线', remaining:'--', score:82, email:'1244836428@qq.com', interviewTime:'2026/8/24 16:26:35', result:'建议通过', updated:'08-24 16:26' },
+  { key:'img-i14', code:'ZM-IV-20260814-0007', candidate:'贺郎郎', project:projects[2].name, job:jobs[5].name, round:'首轮 AI 面试', owner:'招聘专员', linkStatus:'邮件已发送', status:'已完成', online:'离线', remaining:'--', score:45, email:'helanglang@36w.cn', interviewTime:'2026/8/14 18:41:10', result:'建议淘汰', updated:'08-14 18:41' },
+  { key:'img-i15', code:'ZM-IV-20260814-0006', candidate:'王镜淘', project:projects[2].name, job:jobs[8].name, round:'首轮 AI 面试', owner:'招聘专员', linkStatus:'邮件已发送', status:'已完成', online:'离线', remaining:'--', score:25, email:'wangjingtao.wdeu@bytedance.com', interviewTime:'2026/8/14 15:41:51', result:'建议淘汰', updated:'08-14 15:41' },
+  { key:'img-i16', code:'ZM-IV-20260814-0005', candidate:'黄淳熠', project:projects[2].name, job:jobs[8].name, round:'首轮 AI 面试', owner:'招聘专员', linkStatus:'邮件已发送', status:'已完成', online:'离线', remaining:'--', score:20, email:'huangchunyi.razx@bytedance.com', interviewTime:'2026/8/14 14:58:54', result:'建议淘汰', updated:'08-14 14:58' },
+  { key:'img-i17', code:'ZM-IV-20260813-0004', candidate:'王镜淘', project:projects[2].name, job:jobs[8].name, round:'首轮 AI 面试', owner:'招聘专员', linkStatus:'邮件已发送', status:'已完成', online:'离线', remaining:'--', score:10, email:'wangjingtao.wdeu@bytedance.com', interviewTime:'2026/8/13 18:43:22', result:'建议淘汰', updated:'08-13 18:43' },
+  { key:'img-i18', code:'ZM-IV-20260813-0003', candidate:'罗媛媛', project:projects[2].name, job:jobs[8].name, round:'首轮 AI 面试', owner:'招聘专员', linkStatus:'邮件已发送', status:'已完成', online:'离线', remaining:'--', score:58, email:'luoyuanyuan.rnsl@bytedance.com', interviewTime:'2026/8/13 18:42:10', result:'待复核', updated:'08-13 18:42' },
+  { key:'img-i19', code:'ZM-IV-20260813-0002', candidate:'韩龙', project:projects[2].name, job:jobs[7].name, round:'首轮 AI 面试', owner:'招聘专员', linkStatus:'邮件已发送', status:'已完成', online:'离线', remaining:'--', score:55, email:'hanlong@36w.cn', interviewTime:'2026/8/13 18:37:03', result:'待复核', updated:'08-13 18:37' },
+  { key:'img-i20', code:'ZM-IV-20260813-0001', candidate:'韩龙', project:projects[2].name, job:jobs[7].name, round:'首轮 AI 面试', owner:'招聘专员', linkStatus:'邮件已发送', status:'已完成', online:'离线', remaining:'--', score:30, email:'hanlong@36w.cn', interviewTime:'2026/8/13 17:53:41', result:'建议淘汰', updated:'08-13 17:53' },
 ];
 
-export const candidates = ['江予安','孟书瑶','程砚秋','陆闻舟','宋知夏','林望舒','谢承宇','许清欢','周景澄','苏映雪'];
+export const candidates = [...new Set(interviews.map(item => item.candidate))];
 
-export const trendData = Array.from({ length: 14 }, (_, i) => ({
-  date: `08-${21 + i}`,
-  邀约量: [32,38,35,44,41,28,36,49,52,47,56,61,58,67][i],
-  完成量: [18,22,24,29,31,20,25,35,38,36,42,45,47,50][i],
-}));
+export const trendData = [
+  { date:'08-13', 邀约量:4, 完成量:4 },
+  { date:'08-14', 邀约量:3, 完成量:3 },
+  { date:'08-15', 邀约量:0, 完成量:0 },
+  { date:'08-16', 邀约量:0, 完成量:0 },
+  { date:'08-17', 邀约量:0, 完成量:0 },
+  { date:'08-18', 邀约量:0, 完成量:0 },
+  { date:'08-19', 邀约量:0, 完成量:0 },
+  { date:'08-20', 邀约量:0, 完成量:0 },
+  { date:'08-21', 邀约量:0, 完成量:0 },
+  { date:'08-22', 邀约量:0, 完成量:0 },
+  { date:'08-23', 邀约量:0, 完成量:0 },
+  { date:'08-24', 邀约量:11, 完成量:11 },
+  { date:'08-25', 邀约量:2, 完成量:2 },
+];
 
 export const funnelData = [
-  { stage:'已邀约', value:1268 }, { stage:'已访问', value:1084 },
-  { stage:'已完成', value:879 }, { stage:'审核通过', value:532 },
-  { stage:'进入下一轮', value:386 }, { stage:'最终通过', value:214 },
+  { stage:'已邀约', value:20 }, { stage:'已访问', value:20 },
+  { stage:'已完成', value:20 }, { stage:'审核通过', value:6 },
+  { stage:'进入下一轮', value:6 }, { stage:'最终通过', value:2 },
 ];
 
 export const delay = <T,>(data: T, ms = 350) =>

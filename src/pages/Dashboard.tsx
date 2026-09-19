@@ -7,7 +7,7 @@ import {
 } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import { PageHeader, StatCard, StatusTag } from '../components/Common';
-import { funnelData, projects, trendData } from '../services/mock';
+import { funnelData, interviews, jobs, projects, trendData } from '../services/mock';
 import { useApp } from '../context/AppContext';
 
 export function Dashboard() {
@@ -39,15 +39,15 @@ export function Dashboard() {
       <span><SyncOutlined /> 数据更新于 16:50</span>
     </div>
     <Row gutter={12} className="stats-row five">
-      <Col flex="1"><StatCard label="累计面试人数" value="12,680" trend="+18.6%" onClick={()=>navigate('/records')} /></Col>
-      <Col flex="1"><StatCard label="进行中项目" value="18" trend="+2" tone="cyan" onClick={()=>navigate('/projects?status=进行中')} /></Col>
-      <Col flex="1"><StatCard label="招聘中岗位" value="46" trend="+6" tone="green" onClick={()=>navigate('/jobs?status=招聘中')} /></Col>
-      <Col flex="1"><StatCard label="AI 面试完成量" value="8,946" trend="+21.3%" tone="violet" onClick={()=>navigate('/records?type=AI')} /></Col>
-      <Col flex="1"><StatCard label="本月节省人工时长" value="1,286h" trend="+16.2%" tone="orange" onClick={()=>navigate('/analytics/interviews')} /></Col>
+      <Col flex="1"><StatCard label="累计面试人数" value={new Set(interviews.map(item=>item.candidate)).size} trend="图片数据" onClick={()=>navigate('/records')} /></Col>
+      <Col flex="1"><StatCard label="进行中项目" value={projects.filter(item=>item.status==='进行中').length} trend="全部进行中" tone="cyan" onClick={()=>navigate('/projects?status=进行中')} /></Col>
+      <Col flex="1"><StatCard label="招聘中岗位" value={jobs.filter(item=>item.status==='招聘中').length} trend="图片岗位" tone="green" onClick={()=>navigate('/jobs?status=招聘中')} /></Col>
+      <Col flex="1"><StatCard label="AI 面试完成量" value={interviews.filter(item=>item.status==='已完成').length} trend="完成率 100%" tone="violet" onClick={()=>navigate('/records?type=AI')} /></Col>
+      <Col flex="1"><StatCard label="平均 AI 得分" value={`${Math.round(interviews.reduce((sum,item)=>sum+item.score,0)/interviews.length)} 分`} trend="20 条记录" tone="orange" onClick={()=>navigate('/analytics/interviews')} /></Col>
     </Row>
     <Card className="overview-strip" title="今日运行概览">
       <div className="overview-items">
-        {[['今日待面试','86','blue'],['面试中','12','cyan'],['待审核','28','orange'],['异常数量','7','red'],['24 小时内过期','16','gold']].map(x=><div key={x[0]} onClick={()=>navigate('/interviews/process')}><span className={`dot ${x[2]}`} /><b>{x[1]}</b><small>{x[0]}</small></div>)}
+        {[['已完成面试',String(interviews.length),'blue'],['建议通过',String(interviews.filter(item=>item.score>=70).length),'cyan'],['待复核',String(interviews.filter(item=>item.result==='待复核').length),'orange'],['低于 60 分',String(interviews.filter(item=>item.score<60).length),'red'],['涉及岗位',String(new Set(interviews.map(item=>item.job)).size),'gold']].map(x=><div key={x[0]} onClick={()=>navigate('/records')}><span className={`dot ${x[2]}`} /><b>{x[1]}</b><small>{x[0]}</small></div>)}
       </div>
     </Card>
     <Row gutter={16}>

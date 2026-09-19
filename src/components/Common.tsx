@@ -18,7 +18,8 @@ const colorMap: Record<string, string> = {
   '已归档':'default','已过期':'default','已废弃':'default','暂停':'default','草稿':'default',
 };
 
-export function StatusTag({ status }: { status: string }) {
+export function StatusTag({ status }: { status?: string }) {
+  if (!status) return <Tag>--</Tag>;
   const color = colorMap[status] || (status.includes('失败') ? 'error' : status.includes('待') ? 'warning' : 'default');
   const icon = color === 'error' ? <CloseCircleFilled /> : color === 'success' ? <CheckCircleFilled /> :
     color === 'processing' ? <ClockCircleFilled /> : undefined;
@@ -82,7 +83,7 @@ export function ImportWizard({ open, onClose }: { open:boolean; onClose:()=>void
       <div className="wizard-content">
         {step === 0 && <><Button icon={<DownloadOutlined />}>下载固定模板</Button><Upload.Dragger accept=".xlsx,.xls" beforeUpload={()=>false} style={{marginTop:16}}><p className="ant-upload-drag-icon"><InboxOutlined /></p><p>拖拽 Excel 文件到此处，或点击上传</p><p className="hint">支持 .xlsx/.xls，文件不超过 20MB</p></Upload.Dragger></>}
         {step === 1 && <Form layout="vertical"><Alert message="已自动识别 9 个字段，其中 3 个必填字段" type="success" showIcon/><div className="mapping-row"><b>候选人姓名 *</b><span>→</span><Select value="姓名" options={[{value:'姓名'}]} /></div><div className="mapping-row"><b>手机号 *</b><span>→</span><Select value="联系电话" options={[{value:'联系电话'}]} /></div><div className="mapping-row"><b>目标岗位 *</b><span>→</span><Select value="应聘职位" options={[{value:'应聘职位'}]} /></div></Form>}
-        {step === 2 && <><Alert message="共 10 条：8 条可导入，1 条重复，1 条格式错误" type="warning" showIcon/><Table size="small" pagination={false} dataSource={[{key:1,name:'江予安',phone:'138****2468',result:'可导入'},{key:2,name:'孟书瑶',phone:'139****6712',result:'疑似重复'},{key:3,name:'程砚秋',phone:'手机号格式错误',result:'错误'}]} columns={[{title:'姓名',dataIndex:'name'},{title:'手机号',dataIndex:'phone'},{title:'检测结果',dataIndex:'result',render:(value:string)=><StatusTag status={value} />}]} /></>}
+        {step === 2 && <><Alert message="共 10 条：8 条可导入，1 条重复，1 条格式错误" type="warning" showIcon/><Table size="small" pagination={false} dataSource={[{key:1,name:'左君怡',phone:'zuojunyi@36w.cn',result:'可导入'},{key:2,name:'韩龙',phone:'hanlong@36w.cn',result:'疑似重复'},{key:3,name:'王佳洁',phone:'邮箱格式待确认',result:'错误'}]} columns={[{title:'姓名',dataIndex:'name'},{title:'邮箱',dataIndex:'phone'},{title:'检测结果',dataIndex:'result',render:(value:string)=><StatusTag status={value} />}]} /></>}
         {step === 3 && <Result status="warning" title="部分导入成功" subTitle="成功 8 条，失败 2 条，已生成导入报告" extra={<Button icon={<FileExcelOutlined />}>下载失败明细</Button>} />}
       </div>
     </Modal>

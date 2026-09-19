@@ -85,7 +85,7 @@ export function AppLayout() {
       </Layout>
       <Modal open={searchOpen} onCancel={()=>setSearchOpen(false)} footer={null} width={640} title="全局搜索">
         <Input autoFocus size="large" prefix={<SearchOutlined />} value={query} onChange={e=>setQuery(e.target.value)} placeholder="输入名称或编号进行模糊搜索" />
-        {!query ? <div className="recent-search"><Typography.Text type="secondary">最近搜索</Typography.Text><Space wrap><Button size="small">云产品技术支持</Button><Button size="small">江予安</Button><Button size="small">ZM-IV-20260903</Button></Space></div> :
+        {!query ? <div className="recent-search"><Typography.Text type="secondary">最近搜索</Typography.Text><Space wrap><Button size="small">zj大模型标注</Button><Button size="small">张兰兰</Button><Button size="small">ZM-IV-20260824</Button></Space></div> :
         <div className="search-results">
           <ResultGroup title="项目" items={searchResults.projects.map(x=>({title:x.name,sub:x.code}))} onClick={()=>navigate('/projects')} />
           <ResultGroup title="岗位" items={searchResults.jobs.map(x=>({title:x.name,sub:x.code}))} onClick={()=>navigate('/jobs')} />

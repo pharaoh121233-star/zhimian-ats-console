@@ -75,10 +75,10 @@ export function NotificationTemplatesPage() {
 
 const auditLogs=[
   {key:'1',time:'09-08 15:42:18',user:'周谨言',role:'超级管理员',module:'项目管理',action:'批量删除',object:'3 个测试项目',summary:'删除虚拟项目及关联展示数据',ip:'10.24.18.36',result:'成功'},
-  {key:'2',time:'09-08 14:26:09',user:'许昭',role:'招聘专员',module:'面试通过',action:'创建飞书会议',object:'程砚秋 · 二轮面试',summary:'创建飞书会议并发送通知',ip:'10.24.20.18',result:'成功'},
+  {key:'2',time:'08-25 14:26:09',user:'招聘专员',role:'招聘专员',module:'面试通过',action:'创建飞书会议',object:'张兰兰 · 二轮面试',summary:'创建飞书会议并发送通知',ip:'10.24.20.18',result:'成功'},
   {key:'3',time:'09-08 14:02:31',user:'系统服务',role:'系统',module:'飞书集成',action:'结果回传',object:'oc_26090842',summary:'同步录制、妙记和面试评价',ip:'172.18.0.6',result:'成功'},
-  {key:'4',time:'09-08 11:18:45',user:'沈知行',role:'项目经理',module:'岗位管理',action:'修改负责人',object:'云产品技术支持工程师',summary:'新增岗位负责人陈砚',ip:'10.24.19.22',result:'成功'},
-  {key:'5',time:'09-08 10:06:12',user:'顾清禾',role:'岗位负责人',module:'面试台账',action:'导出',object:'本月 AI 面试记录',summary:'导出 386 条记录',ip:'10.24.18.91',result:'失败'},
+  {key:'4',time:'08-25 11:18:45',user:'项目管理员',role:'项目经理',module:'岗位管理',action:'修改负责人',object:'腾讯大模型标注',summary:'更新岗位负责人和招聘专员',ip:'10.24.19.22',result:'成功'},
+  {key:'5',time:'08-25 10:06:12',user:'标注业务负责人',role:'岗位负责人',module:'面试台账',action:'导出',object:'8 月 AI 面试记录',summary:'导出 20 条记录',ip:'10.24.18.91',result:'失败'},
 ];
 
 export function AuditLogPage() {

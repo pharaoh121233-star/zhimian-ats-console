@@ -27,18 +27,18 @@ const questionData = jobs.slice(0,8).map((x,i)=>({key:x.key,code:`ZM-QS-2026-${S
 
 const scoreData = jobs.slice(0,8).map((x,i)=>({key:x.key,name:`${x.name}综合评分模板`,project:x.project,job:x.name,total:100,line:70+i%3*5,dimensions:5+i%3,veto:i%2,status:i===2?'草稿':'已发布',version:`V${2+i%2}.${i}`,updated:`09-0${3-i%3} 15:${10+i}`}));
 
-const talentData = interviews.map((x,i)=>({key:x.key,name:x.candidate,contact:`138****${2468+i*113}`,project:x.project,job:x.job,pool:i%3===0?'公海池':'私海池',result:x.score>80?'通过':x.status,score:x.score||'--',tags:['技术支持','客户沟通'],owner:x.owner,updated:`09-03 ${x.updated}`}));
+const talentData = interviews.map((x,i)=>({key:x.key,name:x.candidate,contact:x.email||'未填写',project:x.project,job:x.job,pool:i%3===0?'公海池':'私海池',result:x.result||x.status,score:x.score,tags:['AI 面试'],owner:x.owner,updated:x.interviewTime||x.updated}));
 
 const userData = ['周谨言','沈知行','顾清禾','林嘉树','许昭','唐宁','苏晚','温言'].map((name,i)=>({key:String(i+1),name,account:`user${i+1}@zhimian.cn`,department:['招聘运营部','云产品事业部','客户服务部'][i%3],role:['超级管理员','项目经理','岗位负责人','招聘专员','审核人员'][i%5],scope:i===0?'全部组织数据':`${1+i%4} 个项目 / ${2+i} 个岗位`,source:i%3===0?'统一登录同步':'管理员创建',status:i===6?'停用':'启用',login:`09-0${3-i%3} 1${i}:20`}));
 
 const genericData = Array.from({length:9},(_,i)=>({key:String(i+1),code:`ZM-${String(i+1).padStart(4,'0')}`,name:['AI 首轮标准流程','面试邀请短信模板','候选人来源','项目编号规则','导出面试台账','角色权限调整','智面 V2.8.0','云产品事业部','项目创建审批'][i],module:['流程配置','通知模板','基础字典','编号规则','下载任务','审计日志','版本更新','组织架构','审批中心'][i],owner:['周谨言','顾清禾','沈知行'][i%3],status:['启用','已发布','正常','生成中','已完成','待审批'][i%6],updated:`09-0${3-i%3} ${10+i}:20`}));
 
 export function ProjectPage() {
-  return <BusinessList title="项目管理" description="管理招聘项目、目标进度和审批状态" stats={[{label:'全部项目',value:28},{label:'进行中',value:18},{label:'即将到期',value:4,tone:'orange'},{label:'暂停',value:2},{label:'已归档',value:36}]} data={projects as unknown as (Record<string,unknown>&{key:string})[]} columns={projectColumns} primaryAction="新建项目" filterNames={['项目名称 / 编号','客户 / 业务线','项目经理','状态','日期范围']} />;
+  return <BusinessList title="项目管理" description="管理招聘项目、目标进度和审批状态" stats={[{label:'全部项目',value:projects.length},{label:'进行中',value:projects.filter(item=>item.status==='进行中').length},{label:'待完善归属',value:projects.filter(item=>item.risk.includes('完善')).length,tone:'orange'},{label:'岗位总数',value:jobs.length},{label:'面试记录',value:interviews.length,tone:'green'}]} data={projects as unknown as (Record<string,unknown>&{key:string})[]} columns={projectColumns} primaryAction="新建项目" filterNames={['项目名称 / 编号','客户 / 业务线','项目经理','状态','日期范围']} />;
 }
 
 export function JobPage() {
-  return <BusinessList title="岗位管理" description="配置岗位、成员权限与面试流程" stats={[{label:'招聘中岗位',value:46},{label:'待审批',value:7,tone:'orange'},{label:'即将关闭',value:5},{label:'HC 缺口',value:86,tone:'red'},{label:'已归档',value:32}]} data={jobs as unknown as (Record<string,unknown>&{key:string})[]} columns={jobColumns} primaryAction="新建岗位" filterNames={['关键词','项目','岗位负责人','招聘专员','状态']} />;
+  return <BusinessList title="岗位管理" description="配置岗位、成员权限与面试流程" stats={[{label:'招聘中岗位',value:jobs.filter(item=>item.status==='招聘中').length},{label:'项目内岗位',value:jobs.filter(item=>item.project!=='未归属项目').length},{label:'未归属岗位',value:jobs.filter(item=>item.project==='未归属项目').length,tone:'orange'},{label:'HC 缺口',value:jobs.reduce((sum,item)=>sum+item.gap,0),tone:'red'},{label:'面试完成',value:interviews.length,tone:'green'}]} data={jobs as unknown as (Record<string,unknown>&{key:string})[]} columns={jobColumns} primaryAction="新增 JD" filterNames={['关键词','项目','岗位负责人','招聘专员','状态']} />;
 }
 
 export function GenericPage() {
@@ -55,7 +55,7 @@ export function GenericPage() {
     isScore ? [textCol('模板名称','name',230),textCol('项目 / 岗位','job',210),textCol('总分','total'),textCol('通过线','line'),textCol('维度数','dimensions'),textCol('单项否决','veto'),textCol('当前版本','version'),statusCol(),textCol('更新时间','updated')] :
     isTalent ? [{title:'候选人',dataIndex:'name',width:120,render:(v:string)=><Button type="link">{v}</Button>},textCol('联系方式','contact'),textCol('最近项目 / 岗位','job',220),textCol('人才池','pool'),textCol('最近结果','result'),{title:'AI 得分',dataIndex:'score'},textCol('负责人','owner'),textCol('更新时间','updated')] :
     isUsers ? [{title:'用户',dataIndex:'name',render:(v:string)=><Button type="link">{v}</Button>},textCol('账号 / 邮箱','account',190),textCol('部门','department'),textCol('角色','role'),textCol('项目 / 岗位数据范围','scope',180),textCol('账号来源','source'),statusCol(),textCol('最后登录','login')] :
-    isRecord ? [textCol('面试编号','code',190),textCol('候选人','candidate'),textCol('项目 / 岗位','job',220),textCol('轮次','round'),textCol('会议方式','provider',130),textCol('负责人 / 面试官','owner'),{title:'AI 总分',dataIndex:'score'},statusCol('面试状态','status'),statusCol('结果同步','syncStatus'),textCol('异常','risk'),textCol('更新时间','updated')] :
+    isRecord ? [textCol('面试编号','code',190),textCol('候选人','candidate'),textCol('邮箱','email',220),textCol('项目','project',140),textCol('岗位','job',160),textCol('完成时间','interviewTime',170),{title:'AI 得分',dataIndex:'score',width:90,sorter:(a:any,b:any)=>Number(a.score)-Number(b.score),render:(value:number)=><Tag color={value>=80?'green':value>=60?'orange':'red'}>{value} 分</Tag>},textCol('评估结果','result',110),statusCol('面试状态','status'),statusCol('通知状态','linkStatus'),textCol('会议方式','provider',130),statusCol('结果同步','syncStatus'),textCol('更新时间','updated')] :
     [textCol('编号','code'),textCol('名称 / 摘要','name',240),textCol('所属模块','module'),textCol('负责人','owner'),statusCol(),textCol('更新时间','updated')];
   return <BusinessList title={meta.title} description={meta.description} stats={[{label:'全部',value:128},{label:'启用 / 进行中',value:86},{label:'待处理',value:18,tone:'orange'},{label:'异常',value:3,tone:'red'},{label:'本月新增',value:24,tone:'green'}]} data={source as unknown as (Record<string,unknown>&{key:string})[]} columns={columns} primaryAction={isTalent?'录入候选人':`新建${meta.title.replace('管理','')}`} allowBoard={isTalent||pathname==='/approvals'} headerExtra={pathname==='/versions'?<Button onClick={()=>navigate('/jobs')}>查看当前配置</Button>:undefined} />;
 }
