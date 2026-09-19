@@ -49,22 +49,25 @@ export function EmptyState({ type = 'empty', onRetry }: { type?:string; onRetry?
   return <Empty description={type === 'search' ? '未找到符合条件的数据' : '暂无数据'}><Button type="primary">创建第一条数据</Button></Empty>;
 }
 
-export function DetailDrawer({ open, onClose, title, record }: {
+export function DetailDrawer({ open, onClose, title, record, content, width = 620 }: {
   open:boolean; onClose:()=>void; title:string; record?:Record<string, unknown>;
+  content?:ReactNode; width?:number;
 }) {
   return (
-    <Drawer open={open} onClose={onClose} width={620} title={title} extra={<Button type="primary">查看完整详情</Button>}>
-      <Alert type="info" showIcon message="信息来自 Mock Service，可替换为真实接口" />
-      <Descriptions column={1} bordered size="small" style={{ marginTop:16 }}>
-        {Object.entries(record || {}).filter(([k]) => k !== 'key').slice(0, 10).map(([k,v]) =>
-          <Descriptions.Item key={k} label={k}>{String(v)}</Descriptions.Item>)}
-      </Descriptions>
-      <Divider titlePlacement="start">操作时间线</Divider>
-      <Timeline items={[
-        { color:'blue', children:'今天 16:42 记录信息更新' },
-        { color:'green', children:'今天 14:18 系统校验通过' },
-        { color:'gray', children:'09-02 10:30 创建记录' },
-      ]} />
+    <Drawer open={open} onClose={onClose} width={width} title={title} extra={<Button type="primary">查看完整详情</Button>}>
+      {content || <>
+        <Alert type="info" showIcon message="信息来自 Mock Service，可替换为真实接口" />
+        <Descriptions column={1} bordered size="small" style={{ marginTop:16 }}>
+          {Object.entries(record || {}).filter(([k]) => k !== 'key').slice(0, 10).map(([k,v]) =>
+            <Descriptions.Item key={k} label={k}>{String(v)}</Descriptions.Item>)}
+        </Descriptions>
+        <Divider titlePlacement="start">操作时间线</Divider>
+        <Timeline items={[
+          { color:'blue', children:'今天 16:42 记录信息更新' },
+          { color:'green', children:'今天 14:18 系统校验通过' },
+          { color:'gray', children:'09-02 10:30 创建记录' },
+        ]} />
+      </>}
     </Drawer>
   );
 }

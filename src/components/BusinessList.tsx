@@ -19,11 +19,13 @@ export type BusinessListProps = {
   data:RecordType[]; columns:ColumnsType<RecordType>; primaryAction?:string; allowBoard?:boolean;
   filterNames?:string[]; filterOptions?:Record<string, {value:string;label:string}[]>; headerExtra?:ReactNode;
   rowActions?:(record:RecordType)=>ReactNode;
+  detailContent?:(record:RecordType)=>ReactNode; detailWidth?:number;
 };
 
 export function BusinessList({
   title, description, stats, data, columns, primaryAction='新建', allowBoard=true,
   filterNames=['关键词','项目','岗位','负责人','状态'], filterOptions={}, headerExtra, rowActions,
+  detailContent, detailWidth,
 }: BusinessListProps) {
   const { canEdit, canDelete } = useApp();
   const storageKey = `zhimian:deleted:${title}`;
@@ -155,7 +157,7 @@ export function BusinessList({
             </Card>)}
           </div>)}</div>}
       </Card>
-      <DetailDrawer open={!!drawer} onClose={()=>setDrawer(undefined)} title={`${title}详情`} record={drawer} />
+      <DetailDrawer open={!!drawer} onClose={()=>setDrawer(undefined)} title={drawer?.candidate ? `面试结果 · ${String(drawer.candidate)}` : `${title}详情`} record={drawer} content={drawer&&detailContent?.(drawer)} width={detailWidth} />
       <ImportWizard open={importOpen} onClose={()=>setImportOpen(false)} />
       <ExportModal open={exportOpen} onClose={()=>setExportOpen(false)} selected={selectedKeys.length} />
     </div>
