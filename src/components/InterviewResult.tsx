@@ -3,7 +3,7 @@ import {
 } from 'antd';
 import {
   CheckCircleFilled, DownloadOutlined, PlayCircleOutlined, ReloadOutlined,
-  SafetyCertificateOutlined, StarOutlined, UserOutlined,
+  ExportOutlined, SafetyCertificateOutlined, StarOutlined, UserOutlined,
 } from '@ant-design/icons';
 import type { Interview } from '../services/mock';
 
@@ -102,7 +102,7 @@ function ProfileTags() {
 }
 
 function QuestionList() {
-  return <Card className="result-card" title="问答记录（10 题）" extra={<Space><Tag color="green">已回答 10</Tag><Tag>未回答 0</Tag></Space>}>
+  return <Card className="result-card" title="问答记录（10 题）" extra={<Space><Tag color="green">已回答 10</Tag><Tag>未回答 0</Tag><Button type="primary" ghost size="small" icon={<ExportOutlined />} href="https://zhimianv1.coze.site/admin/monitor/11f6600b-7a91-4438-96c6-c20aaa8ee904" target="_blank" rel="noopener noreferrer">查看具体记录</Button></Space>}>
     <Collapse ghost items={questions.map((item,index)=>({
       key:String(index),
       label:<div className="qa-title"><b>Q{index+1}</b><Tag color={item.type==='AI追问'?'blue':'purple'}>{item.type}</Tag><Tag>{item.level}</Tag><span>{item.question}</span><Tag color="green" icon={<CheckCircleFilled />}>已回答</Tag></div>,
