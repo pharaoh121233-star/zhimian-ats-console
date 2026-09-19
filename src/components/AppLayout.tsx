@@ -21,7 +21,7 @@ export function AppLayout() {
   const [query, setQuery] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
-  const { role, setRole, dataScope } = useApp();
+  const { userName, role, setRole, dataScope } = useApp();
   const meta = pageMeta[location.pathname] || { title:'业务详情', description:'智面智能面试管理后台' };
   const restrictedPrefixes: Partial<Record<typeof role, string[]>> = {
     '数据观察员':['/dashboard','/records','/calendar','/analytics'],
@@ -74,7 +74,7 @@ export function AppLayout() {
             <Tooltip title="帮助中心"><Button type="text" icon={<QuestionCircleOutlined />} /></Tooltip>
             <Select className="role-select" value={role} onChange={value=>setRole(value)} options={roles.map(value=>({value,label:value}))} />
             <Dropdown menu={{items:[{key:'profile',label:'个人设置',icon:<UserOutlined />},{key:'setting',label:'通知偏好',icon:<SettingOutlined />},{type:'divider'},{key:'logout',label:'退出登录'}]}}>
-              <Space className="user-menu"><Avatar size={30}>周</Avatar><span>周谨言</span><DownOutlined /></Space>
+              <Space className="user-menu"><Avatar size={30}>{userName.slice(0,1)}</Avatar><span>{userName}</span><DownOutlined /></Space>
             </Dropdown>
           </Space>
         </Header>

@@ -4,6 +4,7 @@ export const roles = ['超级管理员','项目经理','岗位负责人','招聘
 export type Role = typeof roles[number];
 
 type ContextValue = {
+  userName: string;
   role: Role;
   setRole: (role: Role) => void;
   compact: boolean;
@@ -19,6 +20,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [role, setRole] = useState<Role>('超级管理员');
   const [compact, setCompact] = useState(false);
   const value = useMemo(() => ({
+    userName: '李延财',
     role, setRole, compact, setCompact,
     canEdit: !['数据观察员','外部客户'].includes(role),
     canDelete: role === '超级管理员',

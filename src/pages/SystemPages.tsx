@@ -15,7 +15,7 @@ import { jobs, projects } from '../services/mock';
 import { roles, type Role, useApp } from '../context/AppContext';
 
 const people = [
-  {key:'1',name:'周谨言',role:'超级管理员',account:'zhou.jinyan',project:'全部项目',job:'全部岗位',scope:'全部组织数据',status:'启用'},
+  {key:'1',name:'李延财',role:'超级管理员',account:'li.yancai',project:'全部项目',job:'全部岗位',scope:'全部组织数据',status:'启用'},
   {key:'2',name:'沈知行',role:'项目经理',account:'shen.zhixing',project:projects[1].name,job:'项目下全部岗位',scope:'本人负责项目',status:'启用'},
   {key:'3',name:'顾清禾',role:'岗位负责人',account:'gu.qinghe',project:projects[1].name,job:jobs[0].name,scope:'本人负责岗位',status:'启用'},
   {key:'4',name:'林嘉树',role:'项目经理',account:'lin.jiashu',project:projects[2].name,job:'项目下全部岗位',scope:'本人负责项目',status:'启用'},
@@ -74,7 +74,7 @@ export function NotificationTemplatesPage() {
 }
 
 const auditLogs=[
-  {key:'1',time:'09-08 15:42:18',user:'周谨言',role:'超级管理员',module:'项目管理',action:'批量删除',object:'3 个测试项目',summary:'删除虚拟项目及关联展示数据',ip:'10.24.18.36',result:'成功'},
+  {key:'1',time:'09-08 15:42:18',user:'李延财',role:'超级管理员',module:'项目管理',action:'批量删除',object:'3 个测试项目',summary:'删除虚拟项目及关联展示数据',ip:'10.24.18.36',result:'成功'},
   {key:'2',time:'08-25 14:26:09',user:'招聘专员',role:'招聘专员',module:'面试通过',action:'创建飞书会议',object:'张兰兰 · 二轮面试',summary:'创建飞书会议并发送通知',ip:'10.24.20.18',result:'成功'},
   {key:'3',time:'09-08 14:02:31',user:'系统服务',role:'系统',module:'飞书集成',action:'结果回传',object:'oc_26090842',summary:'同步录制、妙记和面试评价',ip:'172.18.0.6',result:'成功'},
   {key:'4',time:'08-25 11:18:45',user:'项目管理员',role:'项目经理',module:'岗位管理',action:'修改负责人',object:'腾讯大模型标注',summary:'更新岗位负责人和招聘专员',ip:'10.24.19.22',result:'成功'},

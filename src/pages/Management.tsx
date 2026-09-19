@@ -30,7 +30,7 @@ const scoreData = jobs.slice(0,8).map((x,i)=>({key:x.key,name:`${x.name}综合�
 
 const talentData = interviews.map((x,i)=>({key:x.key,name:x.candidate,contact:x.email||'未填写',project:x.project,job:x.job,pool:i%3===0?'公海池':'私海池',result:x.result||x.status,score:x.score,tags:['AI 面试'],owner:x.owner,updated:x.interviewTime||x.updated}));
 
-const userData = ['周谨言','沈知行','顾清禾','林嘉树','许昭','唐宁','苏晚','温言'].map((name,i)=>({key:String(i+1),name,account:`user${i+1}@zhimian.cn`,department:['招聘运营部','云产品事业部','客户服务部'][i%3],role:['超级管理员','项目经理','岗位负责人','招聘专员','审核人员'][i%5],scope:i===0?'全部组织数据':`${1+i%4} 个项目 / ${2+i} 个岗位`,source:i%3===0?'统一登录同步':'管理员创建',status:i===6?'停用':'启用',login:`09-0${3-i%3} 1${i}:20`}));
+const userData = ['李延财','沈知行','顾清禾','林嘉树','许昭','唐宁','苏晚','温言'].map((name,i)=>({key:String(i+1),name,account:i===0?'li.yancai@zhimian.cn':`user${i+1}@zhimian.cn`,department:['招聘运营部','云产品事业部','客户服务部'][i%3],role:['超级管理员','项目经理','岗位负责人','招聘专员','审核人员'][i%5],scope:i===0?'全部组织数据':`${1+i%4} 个项目 / ${2+i} 个岗位`,source:i%3===0?'统一登录同步':'管理员创建',status:i===6?'停用':'启用',login:`09-0${3-i%3} 1${i}:20`}));
 
 const genericData = Array.from({length:9},(_,i)=>({key:String(i+1),code:`ZM-${String(i+1).padStart(4,'0')}`,name:['AI 首轮标准流程','面试邀请短信模板','候选人来源','项目编号规则','导出面试台账','角色权限调整','智面 V2.8.0','云产品事业部','项目创建审批'][i],module:['流程配置','通知模板','基础字典','编号规则','下载任务','审计日志','版本更新','组织架构','审批中心'][i],owner:['周谨言','顾清禾','沈知行'][i%3],status:['启用','已发布','正常','生成中','已完成','待审批'][i%6],updated:`09-0${3-i%3} ${10+i}:20`}));
 

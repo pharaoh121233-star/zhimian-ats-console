@@ -12,7 +12,7 @@ import { useApp } from '../context/AppContext';
 
 export function Dashboard() {
   const navigate = useNavigate();
-  const { dataScope } = useApp();
+  const { userName, dataScope } = useApp();
   const [project, setProject] = useState('all');
   const [trendTypes, setTrendTypes] = useState<string[]>(['邀约量','完成量']);
   const trendSeries = trendData.flatMap(x=>[
@@ -31,7 +31,7 @@ export function Dashboard() {
   };
   return <div>
     <div className="welcome-bar">
-      <div><span>2026 年 9 月 3 日 · 星期四</span><h1>下午好，周谨言</h1><p>当前数据范围：{dataScope}</p></div>
+      <div><span>2026 年 9 月 3 日 · 星期四</span><h1>下午好，{userName}</h1><p>当前权限：超级管理员 · 数据范围：{dataScope}</p></div>
       <Space><Button icon={<RocketOutlined />} type="primary" onClick={()=>navigate('/interviews/invite')}>发起邀约</Button><Button icon={<PlusOutlined />} onClick={()=>navigate('/jobs')}>新建岗位</Button><Button icon={<ArrowRightOutlined />} onClick={()=>navigate('/analytics/overview')}>查看数据看板</Button></Space>
     </div>
     <div className="dashboard-filter">
